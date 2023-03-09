@@ -4,6 +4,10 @@
     box-sizing: border-box;
 }
 
+.ws-margin-left-medium{
+    margin-left: 16px;
+}
+
 .ws-product-group-list-item{
     display: flex;
     flex-direction: column;
@@ -13,17 +17,45 @@
     margin: 8px 0px;
 }
 
-.ws-product-group-list-item h2{
-    margin: 4px 0px;
+.ws-group-item-conditions{
+    margin-top: 8px;
+    /* margin-left: 16px; */
 }
 
-.ws-group-type-container{
+.ws-product-group-list-item h2{
+    margin: 8px 0px;
+    margin-bottom: 16px;
+}
+
+.ws-group-discount-container{
     display: flex;
     flex-direction: row;
     align-items: center;
 }
 
-.ws-group-add-condition{
+.ws-group-item-condition{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.ws-v-margin-small{
+    margin-top: 8px;
+    margin-bottom: 8px;
+}
+
+.ws-flex-row{
+    display: flex;
+    flex-direction: row;
+}
+
+.ws-align-center{
+    align-items: center;
+}
+
+/* Buttons */
+
+.ws-group-add-condition-button{
     width: fit-content;
     background-color: transparent;
     border: none;
@@ -32,6 +64,23 @@
     margin: 4px 0px;
 }
 
-.ws-group-add-condition:hover{
+.ws-group-add-condition-button:hover{
     color: #1e5684;
+}
+
+.ws-link-button{
+    width: fit-content;
+    background-color: transparent;
+    border: none;
+    color: #2271b1;
+    cursor: pointer;
+    margin: 4px 0px;
+}
+
+.ws-link-button:hover{
+    color: #1e5684;
+}
+
+.ws-button-large{
+    font-size: 18px;
 }

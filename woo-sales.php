@@ -45,32 +45,73 @@ function ws_render_options_page(){
     <?php
 }
 
-function ws_render_product_group_list_item($group_id){
-    ?>
-        <div id='group-<?php echo $group_id ?>'class="ws-product-group-list-item">
-            <h2>Group name</h2>
-            <div class="ws-group-type-container">
-                <select name='group_<?php echo $group_id ?>_type'>
-                    <option value='include'>Include</option>
-                    <option value='include'>Exclude</option>
-                </select>
-                <span style='font-size: 16px'>&nbsp;Product if</span>
-            </div>
-            <div class="ws-group-type-conditions">
+/**
+ * Render hidden sale editor template elements. These elements can be then cloned using JavaScript.
+ * IDs:
+ *  Condition: 'condition-template'
+ *  Group: 'group-template'
+ */
+function ws_sale_editor_templates(){
 
+    global $woocommerce;
+
+    ?>
+        <!-- Template elements -->
+        <div style='display:none'>
+            <!-- Condition template -->
+            <div id='condition-template' class="ws-group-item-condition ws-flex-row ws-align-center ws-v-margin-small">
+                <!-- Condition -->
+                <select
+                    class='ws-condition-type'
+                >
+                    <option>Name</option>
+                </select>
+                <select>
+                    <option>Contains</option>
+                </select>
+                <input type='text'>
+                <select>
+                    <option>AND</option>
+                    <option>OR</option>
+                </select>
             </div>
-            <button 
-                onclick="addGroupCondition(<?php echo $group_id ?>)"
-                class="ws-group-add-condition"
-            >
-                + Add condition
-            </button>
-        </div>
+            <!-- Group template -->
+            <div id='group-list-item-template' class='ws-product-group-list-item'>
+                <h2 class='ws-group-name'>Group name</h2>
+                    <!-- Discount specifier element -->
+                    <div class="ws-group-discount-container">
+                        <span>Apply &nbsp;</span>
+                        <!-- Discount value input -->
+                        <input type="number" style='width: 80px'name="group_x_discount_value">
+                        <!-- Discount type input -->
+                        <select name="group_x_discount_type">
+                            <option value="percentage">%</option>
+                            <option value="fixed"><?php echo get_woocommerce_currency_symbol() ?></option>
+                        </select>
+                        <span>&nbsp; Discount, if</span>
+                    </div>
+                    <!-- Conditions list -->
+                    <div class="ws-group-item-conditions">
+        
+                    </div>
+                    <!-- 
+                        "Add condition" button. Through JS, 
+                        the onclick event should be assigned to 
+                        addGroupCondition(group_id) function when 
+                        the group element gets created
+                    -->
+                    <button 
+                        class="ws-group-add-condition-button"
+                    >
+                        + Add condition
+                    </button>
+                    </div>
+        </div>  
     <?php
 }
 
 //Render function of options page
-function ws_new_sale_page(){
+function ws_sale_editor_page(){
 
     //$sales_table = new SalesTable();
 
@@ -78,18 +119,23 @@ function ws_new_sale_page(){
 
     ?>
         <div class='ws-content'>
+            <?php ws_sale_editor_templates() ?>
             <input type="text" name="name" placeholder="Sale name"/>
-            <div id='condition-template' class="ws-group-type-condition">
-                Condition
+            <div id='groups-list' class="ws-product-groups-list">
+                
             </div>
-            <div class="ws-product-groups-list">
-                <?php 
-                    ws_render_product_group_list_item(1);
-                    ws_render_product_group_list_item(2);
-                    ws_render_product_group_list_item(3);
-                    ws_render_product_group_list_item(4);
-                ?>
-            </div>
+            <button
+                onclick="addGroup()"
+                class='ws-link-button ws-button-large'
+            >
+                + Add Group
+            </button>
+            <script>
+                window.addEventListener("load", () => {
+                    loadSaleEditPage();
+                })
+                
+            </script>
         </div>
     <?php
 }
@@ -99,6 +145,6 @@ function ws_init_menu_items(){
     //add_submenu_page("woocommerce", "WooSales", "aaa", "manage_options", "ws_render_options_page", "test");
     add_submenu_page("woocommerce", "WooSales", "WooSales", "manage_options", "woo-sales", "ws_render_options_page");
 
-    add_submenu_page(null, "WooSales", "New Sale", "manage_options", "ws-new-sale", "ws_new_sale_page");
+    add_submenu_page(null, "WooSales", "New Sale", "manage_options", "ws-new-sale", "ws_sale_editor_page");
 }
 add_action("admin_menu", "ws_init_menu_items");
