@@ -1,5 +1,37 @@
-.ws-header{
-    background-color: blue;
-    height: 100px;
-    width: 100px;
+.ws-content{
+    width: 100%;
+    padding: 16px;
+    box-sizing: border-box;
+}
+
+.ws-product-group-list-item{
+    display: flex;
+    flex-direction: column;
+    border: 1px solid gray;
+    padding: 8px;
+    box-sizing: border-box;
+    margin: 8px 0px;
+}
+
+.ws-product-group-list-item h2{
+    margin: 4px 0px;
+}
+
+.ws-group-type-container{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.ws-group-add-condition{
+    width: fit-content;
+    background-color: transparent;
+    border: none;
+    color: #2271b1;
+    cursor: pointer;
+    margin: 4px 0px;
+}
+
+.ws-group-add-condition:hover{
+    color: #1e5684;
 }
