@@ -36,7 +36,7 @@ function setGroupConditionData(condition_element, data){
 function setGroupConditionIdsNames(condition_element, id, group_id){
     const subelements = getConditionElements(condition_element);
 
-    const identifier = `group[${group_id}][condition][${id}]`;
+    const identifier = `sale_product_group[${group_id}][condition][${id}]`;
 
     condition_element.id         = `condition-${group_id}-${id}`;
     condition_element.dataset.id = id;
@@ -65,7 +65,7 @@ function addGroupCondition(group_id, data = null){
     const condition_template     = document.getElementById("condition-template");
     const new_condition_element  = condition_template.cloneNode(true);
     const subelements            = getConditionElements(new_condition_element);
-    const group_element          = document.getElementById("group-" + group_id);
+    const group_element          = document.getElementById("sale_product_group-" + group_id);
     const all_conditions_element = group_element.querySelector(".ws-group-item-conditions");
 
     //If data is not specified, use default data
@@ -165,12 +165,12 @@ function addGroup(data = null){
     if(!data){
         data = default_data;
         data.id = getUntakenGroupId(groups_list_element);
-        new_group_element.id = `group-${data.id}`;
+        //new_group_element.id = `sale_group-${data.id}`;
     }
 
-    const identifier = `group[${data.id}]`;
+    const identifier = `sale_product_group[${data.id}]`;
 
-    new_group_element.id = `group-${data.id}`;
+    new_group_element.id = `sale_product_group-${data.id}`;
     //console.log(data.id);
     new_group_element.dataset.id = data.id;
 
