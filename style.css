@@ -124,6 +124,8 @@
 }
 
 
+
+
 /**
     5.0 Spacers
 */
@@ -134,4 +136,14 @@
 
 .ws-h-spacer-medium {
     width: 32px; 
+}
+
+/**
+    6.0 Overwrites
+
+    Overwrites of default WP styles
+*/
+
+.button{
+    margin-bottom: 0px !important;
 }
