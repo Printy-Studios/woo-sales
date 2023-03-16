@@ -4,6 +4,13 @@
         * Plugin Name: WooSales
     */
 
+
+/*Require all action functions */
+$files = glob( __DIR__ . '/functions/actions/*.php');
+foreach ($files as $file) {
+    require_once($file);   
+}
+
 //Requires
 require_once("classes/tables/SalesTable.php");
 
@@ -14,15 +21,6 @@ function ws_enqueue_styles_scripts() {
     wp_enqueue_script("woo-sales-scripts", plugin_dir_url(__FILE__) . "/scripts.js");
 }
 add_action("admin_enqueue_scripts", "ws_enqueue_styles_scripts");
-
-
-//Register post types
-function ws_register_post_types(){
-    register_post_type("ws-sale", [
-        "label" => "Sale"
-    ]);
-}
-add_action( 'init', 'ws_register_post_types' );
 
 
 //Render function of options page
@@ -66,11 +64,15 @@ function ws_sale_editor_templates(){
                 >
                     <option>Name</option>
                 </select>
-                <select>
+                <select
+                    class='ws-condition-evaluation'
+                >
                     <option>Contains</option>
                 </select>
-                <input type='text'>
-                <select>
+                <input class='ws-condition-value' type='text'>
+                <select
+                    class='ws-condition-comparison'
+                >
                     <option>AND</option>
                     <option>OR</option>
                 </select>
@@ -82,9 +84,9 @@ function ws_sale_editor_templates(){
                     <div class="ws-group-discount-container">
                         <span>Apply &nbsp;</span>
                         <!-- Discount value input -->
-                        <input type="number" style='width: 80px'name="group_x_discount_value">
+                        <input type="number" style='width: 80px' name="group_x_discount_value" class='ws-group-discount-value'>
                         <!-- Discount type input -->
-                        <select name="group_x_discount_type">
+                        <select name="group_x_discount_type" class='ws-group-discount-type'>
                             <option value="percentage">%</option>
                             <option value="fixed"><?php echo get_woocommerce_currency_symbol() ?></option>
                         </select>
@@ -102,12 +104,48 @@ function ws_sale_editor_templates(){
                     -->
                     <button 
                         class="ws-group-add-condition-button"
+                        type='button'
                     >
                         + Add condition
                     </button>
                     </div>
         </div>  
     <?php
+}
+
+class WS_Discount {
+    private string $type;
+    private float $value;
+
+    function __construct(){
+
+    }
+
+    /**
+     * Generate object data from $_POST request data
+     * 
+     * @param array $post_data $_POST data
+     */
+    function from_post( $post_data ) {
+        //$this->type = $post_data['']
+    }
+}
+
+class WS_Sale_Product_Group {
+    private WS_Discount $discount;
+    private array $conditions;
+
+    function from_post( $post_data ) {
+        $this->discount->from_post( $post_data );
+    }
+}
+
+class WS_Sale_Product_Group_Condition {
+    private string $type;
+    private string $evaluation;
+    private array $values;
+    private string $condition;
+
 }
 
 //Render function of options page
@@ -117,25 +155,48 @@ function ws_sale_editor_page(){
 
     //$sales_table->prepare_items();
 
+    if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
+
+        // wp_insert_post( array(
+        //     'post_type' => 'sale',
+        //     'meta_input' => array (
+        //         'groups' => 'abc'
+        //     )
+        // ) );
+
+        echo "<pre>";
+            print_r($_POST);
+        echo "</pre>";
+    }
+
     ?>
         <div class='ws-content'>
             <?php ws_sale_editor_templates() ?>
-            <input type="text" name="name" placeholder="Sale name"/>
-            <div id='groups-list' class="ws-product-groups-list">
-                
-            </div>
-            <button
-                onclick="addGroup()"
-                class='ws-link-button ws-button-large'
-            >
-                + Add Group
-            </button>
-            <script>
-                window.addEventListener("load", () => {
-                    loadSaleEditPage();
-                })
-                
-            </script>
+                <form method='POST' action=''>
+                    
+                    <div class='ws-flex-row ws-align-center'>
+                        <input class='ws-text-input-large' type="text" name="name" placeholder="Sale name"/>
+                        <div class='ws-h-spacer-small'></div>
+                        <button class='button button-primary'>Save</button>
+                    </div>
+                    
+                    <div id='groups-list' class="ws-product-groups-list">
+                        
+                    </div>
+                    <button
+                        type='button'
+                        onclick="addGroup()"
+                        class='ws-link-button ws-button-large ws-margin-v-medium'
+                    >
+                        + Add Group
+                    </button>
+                    <script>
+                        window.addEventListener("load", () => {
+                            loadSaleEditPage();
+                        })
+                        
+                    </script>
+                </form>
         </div>
     <?php
 }

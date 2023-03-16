@@ -4,9 +4,7 @@
     box-sizing: border-box;
 }
 
-.ws-margin-left-medium{
-    margin-left: 16px;
-}
+
 
 .ws-product-group-list-item{
     display: flex;
@@ -39,19 +37,9 @@
     align-items: center;
 }
 
-.ws-v-margin-small{
-    margin-top: 8px;
-    margin-bottom: 8px;
-}
 
-.ws-flex-row{
-    display: flex;
-    flex-direction: row;
-}
 
-.ws-align-center{
-    align-items: center;
-}
+
 
 /* Buttons */
 
@@ -83,4 +71,67 @@
 
 .ws-button-large{
     font-size: 18px;
+}
+
+/**
+    1.0 Margins
+
+    Small - 8px
+    Medium - 16px
+    Large - 32px
+*/
+
+.ws-margin-v-medium{
+    margin-top: 16px;
+    margin-bottom: 16px;
+}
+
+.ws-margin-left-medium{
+    margin-left: 16px;
+}
+
+.ws-v-margin-small{
+    margin-top: 8px;
+    margin-bottom: 8px;
+}
+
+
+/**
+    2.0 Flexbox
+*/
+
+.ws-flex-row{
+    display: flex;
+    flex-direction: row;
+}
+
+
+/**
+    3.0 Alignment
+*/
+
+.ws-align-center {
+    align-items: center;
+}
+
+
+/**
+    4.0 Inputs
+*/
+
+.ws-text-input-large {
+    width: 240px;
+}
+
+
+/**
+    5.0 Spacers
+*/
+
+.ws-h-spacer-small {
+    width: 16px; 
+}
+
+.ws-h-spacer-medium {
+    width: 32px; 
 }
