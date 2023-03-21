@@ -197,7 +197,14 @@ class SalesTable extends WP_List_Table {
             * For information on making queries in WordPress, see this Codex entry:
             * http://codex.wordpress.org/Class_Reference/wpdb
             */
-        $data = $this->example_data;
+        //$data = $this->example_data;
+        $data = get_posts(array(
+            'post_type' => array('ws-sale')
+        ));
+        echo "<pre>";
+        print_r( $data );
+        //print_r(get_posts());
+        echo "</pre>";
 
         /*
             * This checks for sorting input and sorts the data in our array of dummy

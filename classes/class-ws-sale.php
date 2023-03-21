@@ -41,6 +41,10 @@ class WS_Sale {
         $this->product_groups = [];
     }
 
+    function get_name() {
+        return $this->name;
+    }
+
     /**
      * Check whether object data is valid
      * 

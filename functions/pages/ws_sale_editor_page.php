@@ -18,9 +18,24 @@ function ws_sale_editor_page_maybe_handle_post() {
 
         $sale = new WS_Sale();
         $sale->from_post($_POST);
-        echo "<pre>";
-            print_r($sale);
-        echo "</pre>";
+        if( !isset( $_POST['sale_id']) ) {
+            $post = wp_insert_post(array(
+                'post_type' => 'ws-sale',
+                'post_title' => $sale->get_name(),
+                'post_content' => 'sale',
+                'meta_input' => array(
+                    'sale' => $sale
+                )
+            ));
+
+            echo "inserted sale: ";
+            echo "<pre>";
+            print_r($post);
+            echo "</pre>";
+        }
+        // echo "<pre>";
+        //     print_r($sale);
+        // echo "</pre>";
 
         echo "<pre>";
             print_r($_POST);

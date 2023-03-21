@@ -19,6 +19,8 @@
  * @property {Element}   comparison Comparison element
  */
 
+const PREFILL_DATA = true;
+
 //--Functions--//
 
 function setGroupConditionData(condition_element, data){
